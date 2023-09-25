@@ -7,7 +7,7 @@ const createAdapter = require("@socket.io/redis-adapter").createAdapter;
 const redis = require("redis");
 require("dotenv").config();
 const { createClient } = redis;
-const {
+const { 
   userJoin,
   getCurrentUser,
   userLeave,
@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 const botName = "ChatCord Bot";
 
 (async () => {
-  pubClient = createClient({ url: "redis://127.0.0.1:6379" });
+  pubClient = createClient({ url: "redis://default:EFNuhELgPLwfuzLHBaGV70jG3BTHL4wh@redis-15609.c212.ap-south-1-1.ec2.cloud.redislabs.com:15609" });
   await pubClient.connect();
   subClient = pubClient.duplicate();
   io.adapter(createAdapter(pubClient, subClient));
@@ -32,7 +32,7 @@ const botName = "ChatCord Bot";
 
 // Run when client connects
 io.on("connection", (socket) => {
-  console.log(io.of("/").adapter);
+  // console.log(io.of("/").adapter);
   socket.on("joinRoom", ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
 
@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
       .to(user.room)
       .emit(
         "message",
-        formatMessage(botName, `${user.username} has joined the chat`)
+        formatMessage(botName, `${user.username} has joined the ${user.room}`)
       );
 
     // Send users and room info
@@ -81,6 +81,8 @@ io.on("connection", (socket) => {
     }
   });
 });
+
+//server running here
 
 const PORT = process.env.PORT || 3000;
 

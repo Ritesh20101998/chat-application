@@ -2,6 +2,7 @@ const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
+// const Qs = require('qs');
 
 // Get username and room from URL
 const { username, room } = Qs.parse(location.search, {
@@ -86,5 +87,6 @@ document.getElementById('leave-btn').addEventListener('click', () => {
   if (leaveRoom) {
     window.location = '../index.html';
   } else {
+
   }
 });
